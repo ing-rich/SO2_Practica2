@@ -11,24 +11,25 @@ package Problema2;
  */
 public class Persona implements Runnable {
 
-    
-    public enum TipoPersona {ENTREGA, RECOGE}
+    public enum TipoPersona {
+        ENTREGA, RECOGE
+    }
     public Caja caja;
     public TipoPersona tipo;
     public CentroAcopio centroAcopio;
-    
-    public Persona(CentroAcopio centroAcopio){
+
+    public Persona(CentroAcopio centroAcopio) {
         Double prob = Math.random();
-        if (prob > 0.5){
+        if (prob > 0.5) {
             this.caja = new Caja();
             this.tipo = TipoPersona.ENTREGA;
-        }else{
+        } else {
             this.caja = null;
             this.tipo = TipoPersona.RECOGE;
         }
         this.centroAcopio = centroAcopio;
     }
-    
+
     @Override
     public void run() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

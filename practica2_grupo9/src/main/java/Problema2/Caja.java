@@ -10,8 +10,8 @@ package Problema2;
  * @author rich
  */
 public class Caja {
-    
-    public Caja(){
-    
+
+    public Caja() {
+
     }
 }
