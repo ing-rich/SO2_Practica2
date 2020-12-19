@@ -6,6 +6,7 @@
 package problema1;
 
 import java.awt.Color;
+import java.util.concurrent.locks.ReentrantLock;
 import javax.swing.JLabel;
 
 /**
@@ -13,41 +14,34 @@ import javax.swing.JLabel;
  * @author linkh
  */
 public class Tenedor {
+
     private JLabel tenedor;
-    private int id;
     private Boolean estado; //true = libre, false = ocupado
-    
-    public Tenedor(JLabel tenedor, int id){
+    private ReentrantLock bloqueo;
+
+    public Tenedor(JLabel tenedor) {
         this.tenedor = tenedor;
-        this.id=id;
-        this.estado=true;
+        this.estado = true;
+        this.bloqueo = new ReentrantLock();
+    }
+
+    public void tomarTenedor() {
+        this.bloqueo.lock();
+        this.estado = false;
+        cambiarColor();
+    }
+
+    public void dejarTenedor() {
+        this.estado = true;
+        cambiarColor();
+        bloqueo.unlock();
     }
     
-    public synchronized Boolean tomarTenedor(){
-        if(this.estado){
-            this.estado=false;
-            cambiarColor();
-            return true;
+    private void cambiarColor() {
+        if (estado) {
+            tenedor.setBackground(Color.GREEN);
         } else {
-            return false;
-        } 
+            tenedor.setBackground(Color.RED);
+        }
     }
-    
-   public synchronized Boolean dejarTenedor(){
-       if(!this.estado){
-           this.estado = true;
-           cambiarColor();
-           return true;
-       } else {
-           return false;
-       }
-   }
-    
-   private void cambiarColor(){
-       if(estado){
-           tenedor.setBackground(Color.GREEN);
-       } else {
-           tenedor.setBackground(Color.RED);
-       }
-   }
 }
