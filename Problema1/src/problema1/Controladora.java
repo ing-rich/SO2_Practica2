@@ -27,7 +27,7 @@ public class Controladora {
     
     public void iniciarSimulacion(){
         for(int i=0;i<5;i++){
-            tenedores[i] = new Tenedor(tenedoresLbl[i],i);
+            tenedores[i] = new Tenedor(tenedoresLbl[i]);
         }
         for(int i=0; i<5; i++){
             filosofos[i] = new Filosofo(filosofosLbl[i],tenedores[(i+4)%5],tenedores[i],this.portero);
