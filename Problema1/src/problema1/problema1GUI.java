@@ -6,6 +6,7 @@
 package problema1;
 
 import java.awt.Color;
+import javax.swing.JLabel;
 
 /**
  *
@@ -290,15 +291,23 @@ public class problema1GUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void iniciarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciarBotonActionPerformed
-        cambiarColor();
+        iniciarSimulacion();
     }//GEN-LAST:event_iniciarBotonActionPerformed
-    
-    private void cambiarColor() {
-        Filosofo1.setBackground(Color.green);
-        Filosofo2.setBackground(Color.white);
-        Filosofo3.setBackground(Color.yellow);
-        Filosofo4.setBackground(Color.blue);
-        Filosofo5.setBackground(Color.green);
+    private void iniciarSimulacion(){
+        JLabel [] FilosofosLbl = new JLabel[5];
+        JLabel [] TenedoresLbl = new JLabel[5];
+        FilosofosLbl[0] = this.Filosofo1;
+        FilosofosLbl[1] = this.Filosofo2;
+        FilosofosLbl[2] = this.Filosofo3;
+        FilosofosLbl[3] = this.Filosofo4;
+        FilosofosLbl[4] = this.Filosofo5;
+        TenedoresLbl[0] = this.tenedor1;
+        TenedoresLbl[1] = this.tenedor2;
+        TenedoresLbl[2] = this.tenedor3;
+        TenedoresLbl[3] = this.tenedor4;
+        TenedoresLbl[4] = this.tenedor5;
+        Controladora c = new Controladora(TenedoresLbl,FilosofosLbl);
+        c.iniciarSimulacion();
     }
 
     /**
