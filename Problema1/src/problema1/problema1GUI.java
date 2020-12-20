@@ -19,6 +19,7 @@ public class problema1GUI extends javax.swing.JFrame {
     Controladora c;
     public problema1GUI() {
         initComponents();
+        this.terminarBoton.setEnabled(false);
     }
 
     /**
@@ -293,10 +294,14 @@ public class problema1GUI extends javax.swing.JFrame {
 
     private void iniciarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciarBotonActionPerformed
         iniciarSimulacion();
+        this.iniciarBoton.setEnabled(false);
+        this.terminarBoton.setEnabled(true);
     }//GEN-LAST:event_iniciarBotonActionPerformed
 
     private void terminarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_terminarBotonActionPerformed
         c.detenerSimulacion();
+        this.iniciarBoton.setEnabled(true);
+        this.terminarBoton.setEnabled(false);
     }//GEN-LAST:event_terminarBotonActionPerformed
     private void iniciarSimulacion(){
         JLabel [] FilosofosLbl = new JLabel[5];
