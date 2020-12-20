@@ -38,6 +38,7 @@ El sistema posee un recurso compartido que es el de los tenedores, de forma que 
 En esta sección se describe el proceso completo y los algoritmos implementados para desarrollo del sistema.
 
 El sistema fue desarrollado pensando en un ambiente completamente grafico, es por ello que el uso de variables primitivas es escaso y en su lugar se utilizan JComponentes.
+
 ![N|Interfaz](https://github.com/ing-rich/SO2_Practica2/blob/main/imagenes_manual/interfaz.png)
 
 Para mostrar graficamente todo el proceso o funcionamiento del sistema, se implemento el manejo de estados basados en colores para los componentes del filosofo y los tenedores los cuales son:
@@ -50,7 +51,7 @@ Para mostrar graficamente todo el proceso o funcionamiento del sistema, se imple
 
 Para iniciar la simulación del sistema solo bastara con darle click al boton, que literalmente dice **Iniciar** de la misma forma si se desea finalizar la simulación se debe precionar el boton que dice **Terminar**
 
-![N|Inicio](https://github.com/ing-rich/SO2_Practica2/blob/main/imagenes_manual/interfaz.png)
+![N|Inicio](https://github.com/ing-rich/SO2_Practica2/blob/main/imagenes_manual/iniciar.png)
 
 ### Codigo en java
 
@@ -179,3 +180,7 @@ public synchronized void sacarFilosofo() {
     }
 ```
 10. Con lo anteriormente descrito se finaliza el flujo del filosofo y se inicia nuevamente el bucle con el filosofo pensando.
+
+                
+### Diagrama de flujo
+![N|Inicio](https://github.com/ing-rich/SO2_Practica2/blob/main/imagenes_manual/diagramaFlujo.png)
