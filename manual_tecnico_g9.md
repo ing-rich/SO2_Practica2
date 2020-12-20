@@ -184,3 +184,11 @@ public synchronized void sacarFilosofo() {
                 
 ### Diagrama de flujo
 ![N|Inicio](https://github.com/ing-rich/SO2_Practica2/blob/main/imagenes_manual/diagramaFlujo.png)
+
+### Clases
+- Problema1
+	- Atributos
+	- Metodos
+		| Tipo | Metodo |
+		| ------------ | ------------ |
+		| static void | main​(java.lang.String[] args) |
