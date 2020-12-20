@@ -217,6 +217,7 @@ public synchronized void sacarFilosofo() {
 		| void | terminarBotonActionPerformed(java.awt.event.ActionEvent evt) |
 - Controladora
 	- Constructor
+	
 		| Controladora(JLabel [] tenedoresLbl, JLabel [] filosofosLbl) |
 	- Atributos
 		| Tipo | Atributo |
@@ -233,6 +234,7 @@ public synchronized void sacarFilosofo() {
 		| void | detenerSimulacion() |
 - Filosofo
 	- Constructor
+	
 		| Filosofo(JLabel etiquetaFilosofo) |
 		| Filosofo(JLabel filosofoLbl, Tenedor tenedorIzq, Tenedor tenedorDer) |
 		| Filosofo(JLabel filosofoLbl, Tenedor tenedorIzq, Tenedor tenedorDer,Portero portero) |
@@ -266,6 +268,7 @@ public synchronized void sacarFilosofo() {
 		| synchronized void | sacarFilosofo() |
 - Tenedor
 	- Constructor
+	
 		| Tenedor(JLabel tenedor) |
 	- Atributos
 		| Tipo | Atributo |
