@@ -187,8 +187,95 @@ public synchronized void sacarFilosofo() {
 
 ### Clases
 - Problema1
+	- Constructor
 	- Atributos
 	- Metodos
 		| Tipo | Metodo |
 		| ------------ | ------------ |
 		| static void | main​(java.lang.String[] args) |
+- problema1GUI
+	- Constructor
+	- Atributos
+		| Tipo | Atributo |
+		| ------------ | ------------ |
+		| JLabel | Filosofo1 |
+		| JLabel | Filosofo2 |
+		| JLabel | Filosofo3 |
+		| JLabel | Filosofo4 |
+		| JLabel | Filosofo5 |
+		| JLabel | tenedor1 |
+		| JLabel | tenedor2 |
+		| JLabel | tenedor3 |
+		| JLabel | tenedor4 |
+		| JLabel | tenedor5 |
+		| Controladora | c |
+	- Metodos
+		| Tipo | Metodo |
+		| ------------ | ------------ |
+		| void | iniciarSimulacion() |
+		| void | iniciarBotonActionPerformed(java.awt.event.ActionEvent evt) |
+		| void | terminarBotonActionPerformed(java.awt.event.ActionEvent evt) |
+- Controladora
+	- Constructor
+		| Controladora(JLabel [] tenedoresLbl, JLabel [] filosofosLbl) |
+	- Atributos
+		| Tipo | Atributo |
+		| ------------ | ------------ |
+		| Filosofo [] | filosofos |
+		| JLabel[] | filosofosLbl |
+		| Portero | portero |
+		| Tenedor [] | tenedores |
+		| JLabel [] | tenedoresLbl |
+	- Metodos
+		| Tipo | Metodo |
+		| ------------ | ------------ |
+		| void | iniciarSimulacion() |
+		| void | detenerSimulacion() |
+- Filosofo
+	- Constructor
+		| Filosofo(JLabel etiquetaFilosofo) |
+		| Filosofo(JLabel filosofoLbl, Tenedor tenedorIzq, Tenedor tenedorDer) |
+		| Filosofo(JLabel filosofoLbl, Tenedor tenedorIzq, Tenedor tenedorDer,Portero portero) |
+	- Atributos
+		| Tipo | Atributo |
+		| ------------ | ------------ |
+		| JLabel | etiquetaFilosofo |
+		| Boolean | iniciar |
+		| Portero | portero |
+		| Tenedor | tenedorDer |
+		| Tenedor | tenedorIzq |
+	- Metodos
+		| Tipo | Metodo |
+		| ------------ | ------------ |
+		| void | cambiarColor(int codigo) |
+		| void | comer() |
+		| void | detener() |
+		| void | pensar() |
+		| void | run() |
+		| void | tomarTenedores() |
+- Portero
+	- Constructor
+	- Atributos
+		| Tipo | Atributo |
+		| ------------ | ------------ |
+		| int | filosofos |
+	- Metodos
+		| Tipo | Metodo |
+		| ------------ | ------------ |
+		| synchronized void | ingresarFilosofo() |
+		| synchronized void | sacarFilosofo() |
+- Tenedor
+	- Constructor
+		| Tenedor(JLabel tenedor) |
+	- Atributos
+		| Tipo | Atributo |
+		| ------------ | ------------ |
+		| ReentrantLock | bloqueo |
+		| Boolean | estado |
+		| JLabel | tenedor |
+	- Metodos
+		| Tipo | Metodo |
+		| ------------ | ------------ |
+		| void | cambiarColor() |
+		| void | dejarTenedor() |
+		| void | tomarTenedor() |
