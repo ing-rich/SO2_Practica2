@@ -11,7 +11,7 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  * @author rich
  */
-public class Estanteria extends Thread{
+public class Estanteria {
 
     private CentroAcopio acopio;
     public ReentrantLock candado = new ReentrantLock();
@@ -52,8 +52,8 @@ public class Estanteria extends Thread{
         }
         return true;
     }
-    @Override
-    public void run() {
+    
+    public void runa() {
         try {
             System.out.println("sin actividad");
             sinActividad();
@@ -64,7 +64,7 @@ public class Estanteria extends Thread{
             System.out.println(".");
             if(!actividad){
                 try {
-                    System.out.println("sin actividad");
+                    //System.out.println("sin actividad");
                     sinActividad();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -80,7 +80,7 @@ public class Estanteria extends Thread{
     }
 
     public synchronized void entrarEnActividad(){
-        System.out.println("entro a actividad");
+        //System.out.println("entro a actividad");
         actividad=false;
         notify();
     }
@@ -144,12 +144,15 @@ public class Estanteria extends Thread{
         System.out.println(persona.tipo);
         if( persona.tipo == Persona.TipoPersona.ENTREGA){
             boolean colocada = this.colocarCaja(persona.caja);
+            if(colocada) {
+                persona.caja = null;
+            }
             
         }else {
             persona.caja = this.obtenerCaja();
         }
         this.reporte();
-        Thread.sleep(2000);
+        Thread.sleep(800);
         System.out.println("se fue "+ persona.getName());
         this.candado.unlock();
     }

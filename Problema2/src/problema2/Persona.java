@@ -21,7 +21,7 @@ public class Persona extends Thread{
         this.acopio = acopio;
         this.setName(name);
         Double prob = Math.random();
-        if (prob > 0.5) {
+        if (prob > 0.55) {
             this.caja = new Caja();
             this.tipo = TipoPersona.ENTREGA;
         } else {
@@ -32,30 +32,22 @@ public class Persona extends Thread{
 
     @Override
     public void run() {
-        while (true){
+        boolean contuniar = true;
+        while (contuniar){
             if(acopio.getEstanteria().getActividad()){
-                acopio.getEstanteria().entrarEnActividad();
+                //acopio.getEstanteria().entrarEnActividad();
                 try {
-                    
-                    //aqui preguntar si tiene candado
-                    if(!acopio.getEstanteria().candado.isLocked()){
-                        if(this.tipo == Persona.TipoPersona.ENTREGA ){
-                            if(acopio.getEstanteria().llena()){
-                                System.out.println(this.getName() + " esta llena esperar");
-                            }else{
-                                acopio.getEstanteria().moviendoEstanteria(this);
-                                break;
-                            }
-                        }else if(this.tipo == Persona.TipoPersona.RECOGE ){
-                            if(acopio.getEstanteria().vacia()){
-                                System.out.println(this.getName() + " esta vacia esperar");
-                            }else{
-                                acopio.getEstanteria().moviendoEstanteria(this);
-                                break;
-                            }
+                    acopio.getEstanteria().moviendoEstanteria(this);
+                    if(this.tipo == Persona.TipoPersona.ENTREGA ){
+                        if(this.caja == null){
+                            contuniar =false;
+                        }
+                    }else {
+                        if(this.caja != null){
+                            contuniar =false;
                         }
                     }
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

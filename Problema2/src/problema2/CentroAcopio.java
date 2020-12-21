@@ -12,18 +12,18 @@ package problema2;
 public class CentroAcopio extends Thread{
 
     public Estanteria getEstanteria() {
-        return barbero;
+        return estanteria;
     }
 
-    private Estanteria barbero;
+    private Estanteria estanteria;
 
     public CentroAcopio(){
-        this.barbero = new Estanteria(this);
+        this.estanteria = new Estanteria(this);
     }
 
     @Override
     public void run() {
-        barbero.start();
+        //estanteria.start();
         while (true);
     }
 }
