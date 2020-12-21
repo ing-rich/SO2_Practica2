@@ -41,15 +41,17 @@ public class Persona extends Thread{
                     if(!acopio.getEstanteria().candado.isLocked()){
                         if(this.tipo == Persona.TipoPersona.ENTREGA ){
                             if(acopio.getEstanteria().llena()){
-                                System.out.println("esta llena esperar");
+                                System.out.println(this.getName() + " esta llena esperar");
                             }else{
                                 acopio.getEstanteria().moviendoEstanteria(this);
+                                break;
                             }
                         }else if(this.tipo == Persona.TipoPersona.RECOGE ){
                             if(acopio.getEstanteria().vacia()){
-                                System.out.println("esta vacia esperar");
+                                System.out.println(this.getName() + " esta vacia esperar");
                             }else{
                                 acopio.getEstanteria().moviendoEstanteria(this);
+                                break;
                             }
                         }
                     }
@@ -57,7 +59,7 @@ public class Persona extends Thread{
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                break;
+                
             }
 
         }
