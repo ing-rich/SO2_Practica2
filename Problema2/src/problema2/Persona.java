@@ -38,9 +38,22 @@ public class Persona extends Thread{
                 try {
                     
                     //aqui preguntar si tiene candado
-                    //pretuntar segun el tipo
-                    
-                    acopio.getEstanteria().moviendoEstanteria(this);
+                    if(!acopio.getEstanteria().candado.isLocked()){
+                        if(this.tipo == Persona.TipoPersona.ENTREGA ){
+                            if(acopio.getEstanteria().llena()){
+                                System.out.println("esta llena esperar");
+                            }else{
+                                acopio.getEstanteria().moviendoEstanteria(this);
+                            }
+                        }else if(this.tipo == Persona.TipoPersona.RECOGE ){
+                            if(acopio.getEstanteria().vacia()){
+                                System.out.println("esta vacia esperar");
+                            }else{
+                                acopio.getEstanteria().moviendoEstanteria(this);
+                            }
+                        }
+                    }
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

@@ -14,7 +14,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Estanteria extends Thread{
 
     private CentroAcopio acopio;
-    private ReentrantLock candado = new ReentrantLock();
+    public ReentrantLock candado = new ReentrantLock();
     private boolean actividad = false;
     public Caja cajas[];
 
@@ -35,6 +35,23 @@ public class Estanteria extends Thread{
         return actividad;
     }
     
+    
+    public boolean vacia(){
+        for (int i = 0; i < this.cajas.length; i++) {
+            if (this.cajas[i] != null) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public boolean llena(){
+        for (int i = 0; i < this.cajas.length; i++) {
+            if (this.cajas[i] == null) {
+                return false;
+            }
+        }
+        return true;
+    }
     @Override
     public void run() {
         try {
