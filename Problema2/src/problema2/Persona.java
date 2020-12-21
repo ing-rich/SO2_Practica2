@@ -21,7 +21,7 @@ public class Persona extends Thread{
         this.acopio = acopio;
         this.setName(name);
         Double prob = Math.random();
-        if (prob > 0.55) {
+        if (prob > 0.5) {
             this.caja = new Caja();
             this.tipo = TipoPersona.ENTREGA;
         } else {
