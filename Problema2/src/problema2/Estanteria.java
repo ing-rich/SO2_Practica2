@@ -131,8 +131,16 @@ public class Estanteria {
         for (int i = 0; i < this.cajas.length; i++) {
             if (this.cajas[i] != null) {
                 cadena += "X|";
+                try{
+                    Principal.botones[i].setText("X");
+                }catch(Exception e){
+                }
             }else {
                 cadena += " |";
+                try{
+                    Principal.botones[i].setText("-");
+                }catch(Exception e){
+                }
             }
         }
         System.out.println(cadena);
@@ -146,14 +154,18 @@ public class Estanteria {
             boolean colocada = this.colocarCaja(persona.caja);
             if(colocada) {
                 persona.caja = null;
-            }
-            
+            }          
         }else {
             persona.caja = this.obtenerCaja();
         }
         this.reporte();
         Thread.sleep(800);
         System.out.println("se fue "+ persona.getName());
+        try{
+            //Principal.cajasCambios();
+        }catch(Exception e){
+        
+        }
         this.candado.unlock();
     }
 }

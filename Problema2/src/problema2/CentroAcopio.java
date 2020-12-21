@@ -16,7 +16,11 @@ public class CentroAcopio extends Thread{
     }
 
     private Estanteria estanteria;
+    private boolean detener = true;
 
+    public boolean isDetener() {
+        return detener;
+    }
     public CentroAcopio(){
         this.estanteria = new Estanteria(this);
     }
@@ -24,6 +28,11 @@ public class CentroAcopio extends Thread{
     @Override
     public void run() {
         //estanteria.start();
-        while (true);
+        while (this.detener);
     }
+    public void detener(){
+        this.detener = false;
+    }
+    
+    
 }

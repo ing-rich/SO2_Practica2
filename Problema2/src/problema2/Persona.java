@@ -21,7 +21,7 @@ public class Persona extends Thread{
         this.acopio = acopio;
         this.setName(name);
         Double prob = Math.random();
-        if (prob > 0.5) {
+        if (prob > 0.4) {
             this.caja = new Caja();
             this.tipo = TipoPersona.ENTREGA;
         } else {
@@ -32,19 +32,29 @@ public class Persona extends Thread{
 
     @Override
     public void run() {
-        boolean contuniar = true;
-        while (contuniar){
+        boolean continuar = true;
+        while (continuar){
             if(acopio.getEstanteria().getActividad()){
                 //acopio.getEstanteria().entrarEnActividad();
                 try {
                     acopio.getEstanteria().moviendoEstanteria(this);
                     if(this.tipo == Persona.TipoPersona.ENTREGA ){
                         if(this.caja == null){
-                            contuniar =false;
+                            continuar =false;
+                            try{
+                                Principal.eliminarCola(this);
+                            }catch(Exception e){
+        
+                            }
                         }
                     }else {
                         if(this.caja != null){
-                            contuniar =false;
+                            continuar =false;
+                            try{
+                                Principal.eliminarCola(this);
+                            }catch(Exception e){
+        
+                            }
                         }
                     }
                     Thread.sleep(500);
@@ -53,7 +63,9 @@ public class Persona extends Thread{
                 }
                 
             }
-
+            if(!acopio.isDetener()){
+                break;
+            }
         }
 
     }
