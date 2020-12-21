@@ -285,3 +285,61 @@ public synchronized void sacarFilosofo() {
 		| void | cambiarColor() |
 		| void | dejarTenedor() |
 		| void | tomarTenedor() |
+		
+### Problema 3
+En el problema 3 se plantea el sistema de una barbería con dos barberos, el cual dice lo siguiente:
+
+>Existe una barbería en donde existen 2 barberos que la atienden y cortan el cabello a los 
+>clientes que llegan y cuando no hay ninguno, se ponen a dormir. Los barberos tienen una
+>silla para cortar el cabello que es donde atiende a un cliente y una sala de espera con 20
+>sillas en donde pueden sentarse los clientes que llegan mientras esperan. Cuando un
+>barbero termina de cortar el cabello a un cliente, regresa a la sala de espera a ver si hay
+>personas esperando, si las hay trae consigo a una persona para cortarle el cabello. Si no
+>hay clientes esperando, se pone a dormir en la silla para cortar cabello.
+
+>Cada cliente que llega a la barbería observa lo que los barberos están haciendo. Si algún
+>barbero se encuentra durmiendo, el cliente lo despierta y se sienta en la silla para cortar el
+>cabello.Si los barberos se encuentran ocupados, entonces el cliente se coloca en una silla
+>de la sala de espera. Si no hay sillas disponibles, entonces el cliente se va del lugar.
+
+
+En este problema nos encontramos con los procesos siguientes:
+- dormir
+- cortar cabello
+- despertar
+- llegada del cliente
+- espera
+
+los recursos a nuestra disposición
+- sillas
+- barberos
+
+#### Solucion propuesta
+Los barberos contaran con un hilo cada uno ejecutandose de forma paralela, ambos utilizaran el recurso de las sillas de espera
+
+Por otro lado se utilizara otro hilo, que estara en un bucle creando la llegada de los clientes donde estos haran uso de los recursos de los barberos
+
+- En el caso de los barberos estos iniciaran durmiendo y hasta que un cliente los despierte continuara en este estado.
+para que esto se realiza se implementaría el uso de synchronized de forma que el hilo del barbero se encuentre en wait y hasta que entre un cliente por medio de un notify se estara despertando al barbero
+
+- Para simular el corte de cabello se haría uso de las funciones de ReentrantLock ya que con esto bloquearemos al barbero y hasta que finalice lo desbloquearemos para que realice su siguiente acción
+
+- Hay que mencionar que sera necesarió el uso de una variable como semaforo, que nos indicara el estado en el que se encuentra el barbero, para evitar conflictos en los bloqueos y desbloqueos del barbero para cada uno de sus procesos
+
+- Al finalizar se iniciaría un bucle en el cual se estara revisando si hay personas en las sillas de espera, mientras esto sea verdadero el barbero continuaría cortando cabello, en caso contrarío se da por terminado el proceso y se inicia nuevamente el bucle principal con el barbero durmiendo
+
+Hilo de clientes nuevos
+- Por otro lado se usa un hilo que estara creando instancias de nuevos clientes para ingresar el sistema con tiempos aleatorios, el proceso para estos consistiría en lo siguiente
+ - Para utilizar un sistema de colas y evitar que los clientes nuevos sean atendidos antes que los que estan en espera, se consultaría primero que la cantidad de sillas ocupadas sea igual a 0
+ - en el caso de que hay sillas ocupadas entonces se consultara si hay espacios disponibles de los 20, en caso afirmativo se le pasa la instancia del cliente nuevo a la silla disponible y se aumenta el numero de ocupadas
+ - dado que no hay sillas ocupadas, lo siguiente sera verificar que el estado de alguno de los barberos sea dormido, de ser así se bloquea al barbero y empieza a correr el tiempo aleatorio del corte
+
+Sillas de espera
+- las sillas de espera manejaran un arreglo que entre sus atributos tendran un objeto cliente
+	- Para evitar conflictos se usaran bloqueos que permitiran el ingreso de clientes nuevos mientras sea posible
+	- cuando el contador llegue a 20, se bloqueara el sistema y sera liberado hasta que hayan nuevos espacios disponibles
+	- El primer cliente en el arreglo sera tomado por el barbero al este terminar con su estado de cortar cabello
+	- Se hara un corrimiento para los otros clientes en cola
+	- y los nuevos iran siendo agregados al final
+
+Lo descrito anteriormente nos permitiría obtener un solución para resolver el problema planteado, algunas consideraciones que se deben tomar en cuenta es que ambos barberos no intenten tomar al mismo cliente y que los barberos no cambien del estado dormir
