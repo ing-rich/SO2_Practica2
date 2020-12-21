@@ -140,12 +140,11 @@ public class Estanteria extends Thread{
         System.out.println(persona.tipo);
         if( persona.tipo == Persona.TipoPersona.ENTREGA){
             boolean colocada = this.colocarCaja(persona.caja);
-            while(! colocada) {
-                colocada = this.colocarCaja(persona.caja);
-            }
-            System.out.println("caja colocada");
-            this.reporte();
+            
+        }else {
+            persona.caja = this.obtenerCaja();
         }
+        this.reporte();
         Thread.sleep(2000);
         System.out.println("se fue "+ persona.getName());
         this.candado.unlock();
