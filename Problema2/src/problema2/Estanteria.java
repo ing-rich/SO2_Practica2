@@ -104,16 +104,20 @@ public class Estanteria extends Thread{
 
     public Caja obtenerCaja() {
         int azar = this.indiceAzar();
+        Caja caja = null;
         if (this.cajas[azar] != null) {
-            return this.cajas[azar];
+            caja =  this.cajas[azar];
+            this.cajas[azar] = null;
         } else {
             for (int i = 0; i < this.cajas.length; i++) {
                 if (this.cajas[i] != null) {
-                    return this.cajas[i];
+                    caja = this.cajas[i];
+                    this.cajas[i] = null;
+                    break;
                 }
             }
         }
-        return null;
+        return caja;
     }
 
     private int indiceAzar() {
