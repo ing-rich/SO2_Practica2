@@ -138,7 +138,7 @@ public class Estanteria {
             }else {
                 cadena += " |";
                 try{
-                    Principal.botones[i].setText("-");
+                    Principal.botones[i].setText("");
                 }catch(Exception e){
                 }
             }

@@ -285,7 +285,161 @@ public synchronized void sacarFilosofo() {
 		| void | cambiarColor() |
 		| void | dejarTenedor() |
 		| void | tomarTenedor() |
-		
+
+### Problema 2
+En este problema se planteo un sistema de un centro de acopio en el cual se reciben y entregan cajas de productos.
+
+- El centro cuenta con una estateria con capacidad de 20 cajas.
+- Multiples personas pueden llegar a dejar o recoger cajas.
+- las cajas las pueden colocar y recoger de cualquier parte, de la estanteria
+- Si no hay espacio se debe esperar que exista para dejar una caja.
+- Si esta vacio se debe esperar que lleguen a dejar una caja.
+
+Para este proceso nos econtramos con los siguientes procesos:
+- Colocar Caja 
+- Recoger Caja
+- Verificar estateria Vacia
+- Verificar estateria llena
+
+Recursos:
+- entrada para recoger productos
+- entrada para recibir productos
+- estanteria para colocoar productos
+
+Procesos:
+- Para cada persona se creara un hilo de proceso.
+- Para almacenar/descargar los productos se creara un hilo
+- Para funcion del centro de acopio se creara un hilo de proceso.
+
+>NOTA: Estos procesos se sincronizaran para que se eviten los problemas de concurrencia.
+
+>NOTA: Para el proceso de carga y descarga en la estateria se bloqueara para que solo una operacion se pueda realziar a la vez y se mantenga la integridad de la informacion.
+
+#### SOLUCION
+Se implemento un modelo con las siguientes Clases y crear los objetos necesarios:
+
+- Caja
+- Persona
+	- Recoge
+	- Entrega
+- Estanteria
+- Cetro de Acopio
+- Pricipal(Interfaz de Usuario)
+
+A traves de un metodo ramdon de tiempo se crean personas y a traves de probabilidad se decide que tipo de persona es.
+```java
+Double prob = Math.random();
+if (prob > 0.4) {
+	this.caja = new Caja();
+	this.tipo = TipoPersona.ENTREGA;
+} else {
+	this.caja = null;
+	this.tipo = TipoPersona.RECOGE;
+}
+```
+
+Para definir las llegadas de las personas se definio el metodo de inicio
+
+```java
+public void iniciar(){
+	acopio = new CentroAcopio();
+	Principal.cajas(acopio.getEstanteria().cajas.length);
+	Thread hiloLlegada;
+	acopio.start();
+	Runnable llegada = () ->{
+		while (acopio.isDetener()){
+			try {
+				int tiempo = (int)(Math.random()*10000);
+				Thread.sleep(tiempo);
+				System.out.println("aparecio una persona");
+				Persona nuevaPersona = new Persona(acopio, "persona " + Prueba.id++);
+				Principal.agregarCola(nuevaPersona);
+				nuevaPersona.start();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	};
+
+	hiloLlegada= new Thread(llegada);
+	hiloLlegada.start();
+}
+```
+
+En este metodo se definio como las personas llegan a dejar y entregar las cajas y como si no lograron realizar la accion continuan esperando hasta que la realizan
+
+```java
+public void run() {
+	boolean continuar = true;
+	while (continuar){
+		if(acopio.getEstanteria().getActividad()){
+			try {
+				acopio.getEstanteria().moviendoEstanteria(this);
+				if(this.tipo == Persona.TipoPersona.ENTREGA ){
+					if(this.caja == null){
+						continuar =false;
+						try{
+							Principal.eliminarCola(this);
+						}catch(Exception e){
+	
+						}
+					}
+				}else {
+					if(this.caja != null){
+						continuar =false;
+						try{
+							Principal.eliminarCola(this);
+						}catch(Exception e){
+	
+						}
+					}
+				}
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		if(!acopio.isDetener()){
+			break;
+		}
+	}
+
+}
+```
+
+
+En este metodo como la estanteria gestiona la recpcion y entrega de las cajas
+
+```java
+public synchronized void moviendoEstanteria(Persona persona) throws InterruptedException {
+        this.candado.lock();
+        System.out.println("llego " + persona.getName());
+        System.out.println(persona.tipo);
+        if( persona.tipo == Persona.TipoPersona.ENTREGA){
+            boolean colocada = this.colocarCaja(persona.caja);
+            if(colocada) {
+                persona.caja = null;
+            }          
+        }else {
+            persona.caja = this.obtenerCaja();
+        }
+        this.reporte();
+        Thread.sleep(800);
+        System.out.println("se fue "+ persona.getName());
+        try{
+            //Principal.cajasCambios();
+        }catch(Exception e){
+        
+        }
+        this.candado.unlock();
+    }
+```
+
+Los problemas que se podian dar por la concurrencia se solucionaron con la sincronizacion de los procesos y bloqueando el proceso de colocar/ recoger en la estanteria.
+
+
+
 ### Problema 3
 En el problema 3 se plantea el sistema de una barbería con dos barberos, el cual dice lo siguiente:
 
